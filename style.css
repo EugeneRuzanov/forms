@@ -9,16 +9,65 @@ html, body {
 }
 
 .from-container {
+	float: left;
+	width: 30%;
+	padding: 20px;
 	height: 100%;
 	overflow: scroll;
+}
+
+.from-container textarea {
+	min-height: 150px;
+}
+
+.toolbar {
+	position: fixed;
+	z-index: 1;
+	padding: 0 20px;
+	width: 70%;
+	height: 50px;
+	background-color: #43AC6A;
+	color: #fff;
+}
+
+.toolbar-info {
+	float: left;
+	height: 50px;
+	line-height: 50px;
+}
+
+.toolbar-actions {
+	float: right;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.toolbar-actions a {
+	display: block;
+	float: left;
+	padding: 0 10px;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+}
+
+.toolbar-actions a:hover {
+	background-color: rgba( 255, 255, 255, .3 );
 }
 
 .images-container {
 	height: 100%;
 	margin: 0;
-	padding: 10px;
-	list-style: none;
+	padding: 0;
 	overflow: scroll;
+}
+
+.images-container ul {
+	overflow: hidden;
+	margin: 60px 10px 10px 10px;
+	padding: 0;
+	list-style: none;
 }
 
 .images-container li {
@@ -28,6 +77,10 @@ html, body {
 	width: 200px;
 	height: 200px;
 	background-color: #000;
+}
+
+.images-container li.selected {
+	box-shadow: 0px 0px 0px 10px #04FF01;
 }
 
 .images-container img {
