@@ -1,0 +1,36 @@
+html, body {
+	height: 100%;
+}
+
+.main-container {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+}
+
+.from-container {
+	height: 100%;
+	overflow: scroll;
+}
+
+.images-container {
+	height: 100%;
+	margin: 0;
+	padding: 10px;
+	list-style: none;
+	overflow: scroll;
+}
+
+.images-container li {
+	float: left;
+	margin: 10px;
+	width: 200px;
+	height: 200px;
+	text-align: center;
+	background-color: #000;
+}
+
+.images-container img {
+	max-width: 200px;
+	max-height: 200px;
+}
