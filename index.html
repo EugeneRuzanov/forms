@@ -35,10 +35,10 @@
 	<div class="images-container">
 		<div class="toolbar">
 			<div class="toolbar-info"></div>
-			<div class="toolbar-actions">
-				<a href="#main">Main</a>
-				<a href="#publish">Publish</a>
-				<a href="#delete">Delete</a>
+			<div class="toolbar-actions disable">
+				<div id="actionMain" class="item">Main</div>
+				<div id="actionPublish" class="item">Publish</div>
+				<div id="actionDelete" class="item">Delete</div>
 			</div>
 		</div>
 		<ul class="sortable"></ul>
@@ -52,6 +52,7 @@
 			dropzone = document.querySelector( '.dropzone'),
 			imagesContainer = document.querySelector( '.images-container .sortable'),
 			toolBarInfo = document.querySelector( '.toolbar-info'),
+			toolbarActions = document.querySelector( '.toolbar-actions' ),
 			clickSelect = function () {
 				if ( !this.classList.contains( 'selected' ) ) {
 					this.classList.add( 'selected' );
@@ -68,9 +69,11 @@
 				return Object.keys( _files ).filter(function ( k ) { return _files[k].dom === domEl; } )[0];
 			},
 			setToolBarInfo = function () {
-				var keys = Object.keys( _files );
+				var keys = Object.keys( _files),
+					selected = keys.filter( function( i ) { return _files[i].selected; } );
+				toolbarActions.classList[ selected.length ? 'remove' : 'add' ]( 'disable' );
 				toolBarInfo.innerHTML = 'Total: ' + keys.length;
-				toolBarInfo.innerHTML += ' / Selected: ' + keys.filter( function( i ) { return _files[i].selected; } ).length;
+				toolBarInfo.innerHTML += ' / Selected: ' + selected.length;
 			},
 			onHover = function ( hover ) {
 				dropzone.classList[ hover ? 'add' : 'remove' ]( 'show' );
@@ -81,7 +84,14 @@
 						var li;
 						if ( !err ) {
 							li = document.createElement( 'li' );
-							_files[FileAPI.uid()] = { img : file, dom: li, selected : false, main : false, publish : false };
+							_files[FileAPI.uid()] = {
+								file : file,
+								dom: li,
+								selected : false,
+								main : false,
+								publish : false,
+								caption : ''
+							};
 							setToolBarInfo();
 							li.addEventListener( 'click', clickSelect );
 							li.appendChild( img );
@@ -89,6 +99,30 @@
 						}
 					});
 				});
+			},
+			onMain = function () {
+				Object.keys( _files ).forEach(function ( i ) {
+					if ( _files[i].selected ) {
+						_files[i].main = true;
+					}
+				} );
+			},
+			onPublish = function () {
+				Object.keys( _files ).forEach(function ( i ) {
+					if ( _files[i].selected ) {
+						_files[i].publish = true;
+					}
+				} );
+			},
+			onDelete = function () {
+				Object.keys( _files ).forEach(function ( i ) {
+					if ( _files[i].selected ) {
+						//todo send requset for remove
+						_files[i].dom.parentNode.removeChild( _files[i].dom );
+						delete _files[i];
+						setToolBarInfo();
+					}
+				} );
 			};
 
 		new Sortable( document.querySelector( '.sortable' ), {
@@ -101,6 +135,10 @@
 		setToolBarInfo();
 
 		FileAPI.event.dnd( document, onHover, onFile );
+
+		document.querySelector( '#actionMain' ).addEventListener( 'click', onMain );
+		document.querySelector( '#actionPublish' ).addEventListener( 'click', onPublish );
+		document.querySelector( '#actionDelete' ).addEventListener( 'click', onDelete );
 
 	} )();
 </script>

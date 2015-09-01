@@ -69,17 +69,27 @@ html, body {
 	list-style: none;
 }
 
-.toolbar-actions a {
+.toolbar-actions .item {
 	display: block;
 	float: left;
 	padding: 0 10px;
 	height: 50px;
 	line-height: 50px;
 	color: #fff;
+	cursor: pointer;
 }
 
-.toolbar-actions a:hover {
+.toolbar-actions .item:hover {
 	background-color: rgba( 255, 255, 255, .3 );
+}
+
+.toolbar-actions.disable .item {
+	color: rgba( 255, 255, 255, .3 );
+	cursor: default;
+}
+
+.toolbar-actions.disable .item:hover {
+	background-color: transparent;
 }
 
 .images-container {
@@ -106,7 +116,7 @@ html, body {
 }
 
 .images-container li.selected {
-	box-shadow: 0px 0px 0px 10px #04FF01;
+	box-shadow: 0px 0px 0px 10px red;
 }
 
 .images-container canvas {
