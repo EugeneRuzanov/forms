@@ -7,6 +7,9 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="dropzone">
+	<div class="dropzone-message">Drop files there</div>
+</div>
 <div class="main-container">
 	<form action="#" class="from-container">
 		<label>
@@ -31,107 +34,61 @@
 	</form>
 	<div class="images-container">
 		<div class="toolbar">
-			<div class="toolbar-info">
-				Total: 12
-			</div>
+			<div class="toolbar-info"></div>
 			<div class="toolbar-actions">
 				<a href="#main">Main</a>
 				<a href="#publish">Publish</a>
 				<a href="#delete">Delete</a>
 			</div>
 		</div>
-		<ul class="sortable">
-			<li>
-				<img src="img/7ZjCqC5SKDE.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/dDKeK4zBWrU.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/EvHzy3L0oOE.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/HLIlcuLO00A.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/igy-RWh35og.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/j1wRAqqu7i0.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/jW6RIbwvqqg.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/kO67fAqQkYU.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/n7xF3V_Y0o0.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/oI3Y7cv5ld8.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/p7G4k6Q2E5c.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/S7KROslyN5w.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/SDr2lH_-b3g.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/UDu4NJ3ROcI.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/xZzzfETUHvw.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/y_9a59e659.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/y_9890d638.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/y_ac4c1c13.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/YFVZujUPIFA.jpg" alt="">
-			</li>
-			<li>
-				<img src="img/YZUEVHicgTI.jpg" alt="">
-			</li>
-
-
-		</ul>
+		<ul class="sortable"></ul>
 	</div>
 </div>
-<script src="Sortable.min.js"></script>
+<script src="js/FileAPI.html5.js"></script>
+<script src="js/Sortable.js"></script>
 <script>
 	(function () {
-		var selected = []
-			, sortableLi = document.querySelectorAll( '.sortable li')
-			, toolBarInfo = document.querySelector( '.toolbar-info' )
-			, clickSelect = function () {
-				var indexOf;
+		var _files = {},
+			dropzone = document.querySelector( '.dropzone'),
+			imagesContainer = document.querySelector( '.images-container .sortable'),
+			toolBarInfo = document.querySelector( '.toolbar-info'),
+			clickSelect = function () {
 				if ( !this.classList.contains( 'selected' ) ) {
 					this.classList.add( 'selected' );
 					//todo save to selected
-					selected.push( this.querySelector( 'img' ).src );
+					_files[getIndex( this )].selected = true;
 				} else {
 					this.classList.remove( 'selected' );
 					//todo remove to selected
-					indexOf = selected.indexOf( this.querySelector( 'img' ).src );
-					if ( ~indexOf ) {
-						selected.splice( indexOf, 1 );
-					}
+					_files[getIndex( this )].selected = false;
 				}
-				if ( selected.length ) {
-					toolBarInfo.innerHTML = 'Total: ' + sortableLi.length + ' / Seleted: ' + selected.length;
-				} else {
-					toolBarInfo.innerHTML = 'Total: ' + sortableLi.length;
-				}
-				console.log( selected );
+				setToolBarInfo();
+			},
+			getIndex = function ( domEl ) {
+				return Object.keys( _files ).filter(function ( k ) { return _files[k].dom === domEl; } )[0];
+			},
+			setToolBarInfo = function () {
+				var keys = Object.keys( _files );
+				toolBarInfo.innerHTML = 'Total: ' + keys.length;
+				toolBarInfo.innerHTML += ' / Selected: ' + keys.filter( function( i ) { return _files[i].selected; } ).length;
+			},
+			onHover = function ( hover ) {
+				dropzone.classList[ hover ? 'add' : 'remove' ]( 'show' );
+			},
+			onFile = function ( files ) {
+				FileAPI.each( files, function ( file ) {
+					FileAPI.Image( file ).get( function (err/**String*/, img/**HTMLElement*/) {
+						var li;
+						if ( !err ) {
+							li = document.createElement( 'li' );
+							_files[FileAPI.uid()] = { img : file, dom: li, selected : false, main : false, publish : false };
+							setToolBarInfo();
+							li.addEventListener( 'click', clickSelect );
+							li.appendChild( img );
+							imagesContainer.appendChild( li );
+						}
+					});
+				});
 			};
 
 		new Sortable( document.querySelector( '.sortable' ), {
@@ -141,10 +98,9 @@
 			}
 		} );
 
-		toolBarInfo.innerHTML = 'Total: ' + sortableLi.length;
-		Array.prototype.forEach.call( sortableLi, function ( el ) {
-			el.addEventListener( 'click', clickSelect );
-		} );
+		setToolBarInfo();
+
+		FileAPI.event.dnd( document, onHover, onFile );
 
 	} )();
 </script>
