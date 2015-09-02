@@ -47,9 +47,17 @@
 				<span id="dnd-enable" class="hide">&nbsp; or drag'n'drop</span>
 			</div>
 			<div class="toolbar-actions disable">
-				<div id="actionMain" class="item">Main</div>
-				<div id="actionPublish" class="item">Publish</div>
-				<div id="actionDelete" class="item">Delete</div>
+				<div id="actionMain" class="item">
+					Main
+					<span class="count">0</span>
+				</div>
+				<div id="actionPublish" class="item">
+					Publish
+					<span class="count">0</span>
+				</div>
+				<div id="actionDelete" class="item">
+					Delete
+				</div>
 			</div>
 		</div>
 		<ul class="sortable"></ul>

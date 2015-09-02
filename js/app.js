@@ -39,7 +39,8 @@
 				FileAPI.Image( file ).get( function (err/**String*/, img/**HTMLElement*/) {
 					var guid = getGUID(), li;
 					if ( !err ) {
-						li = d.createElement( 'li' );
+						var li = d.createElement( 'li' );
+						li.innerHTML = '<div class="ic-selected">';
 						_files[guid] = {
 							file : file,
 							dom: li,
