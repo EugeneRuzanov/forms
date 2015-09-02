@@ -35,6 +35,17 @@
 	<div class="images-container">
 		<div class="toolbar">
 			<div class="toolbar-info"></div>
+			<div class="toolbar-buttons">
+				<div class="btn">
+					Upload one file
+					<input name="files" type="file">
+				</div>
+				<div class="btn">
+					Multiple
+					<input name="files" type="file" multiple>
+				</div>
+				<span id="dnd-enable" class="hide">&nbsp; or drag'n'drop</span>
+			</div>
 			<div class="toolbar-actions disable">
 				<div id="actionMain" class="item">Main</div>
 				<div id="actionPublish" class="item">Publish</div>

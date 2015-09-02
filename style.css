@@ -2,6 +2,10 @@ html, body {
 	height: 100%;
 }
 
+.hide {
+	display: none;
+}
+
 .dropzone {
 	display: none;
 	position: absolute;
@@ -12,21 +16,19 @@ html, body {
 	z-index: 100;
 	background-color: rgba( 67, 172, 106, .7 );
 }
-
 .dropzone.show {
 	display: block;
 }
-
-.dropzone-message {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate( -50%, -50% );
-	width: 80%;
-	text-align: center;
-	color: #fff;
-	font-size: 400%;
-}
+	.dropzone-message {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate( -50%, -50% );
+		width: 80%;
+		text-align: center;
+		color: #fff;
+		font-size: 400%;
+	}
 
 .main-container {
 	width: 100%;
@@ -41,10 +43,9 @@ html, body {
 	height: 100%;
 	overflow: scroll;
 }
-
-.from-container textarea {
-	min-height: 150px;
-}
+	.from-container textarea {
+		min-height: 150px;
+	}
 
 .toolbar {
 	position: fixed;
@@ -52,45 +53,78 @@ html, body {
 	padding: 0 20px;
 	width: 70%;
 	height: 50px;
-	background-color: #43AC6A;
+	background-color: #3E9E61;
 	color: #fff;
 }
-
-.toolbar-info {
-	float: left;
-	height: 50px;
-	line-height: 50px;
-}
-
-.toolbar-actions {
-	float: right;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.toolbar-actions .item {
-	display: block;
-	float: left;
-	padding: 0 10px;
-	height: 50px;
-	line-height: 50px;
-	color: #fff;
-	cursor: pointer;
-}
-
-.toolbar-actions .item:hover {
-	background-color: rgba( 255, 255, 255, .3 );
-}
-
-.toolbar-actions.disable .item {
-	color: rgba( 255, 255, 255, .3 );
-	cursor: default;
-}
-
-.toolbar-actions.disable .item:hover {
-	background-color: transparent;
-}
+	.toolbar-info {
+		float: left;
+		height: 50px;
+		line-height: 50px;
+	}
+	.toolbar-buttons {
+		float: left;
+		margin: 0 10px;
+		height: 50px;
+	}
+		.toolbar-buttons #dnd-enable {
+			line-height: 50px;
+		}
+		.toolbar-buttons .btn {
+			float: left;
+			overflow: hidden;
+			position: relative;
+			margin: 7px 10px;
+			padding: 0 10px;
+			height: 36px;
+			line-height: 36px;
+			background-color: #42C974;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+			.toolbar-buttons .btn input {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				margin: 0;
+				padding: 0;
+				width: auto;
+				opacity: 0;
+				cursor: pointer;
+				font-size: 60px;
+			}
+		.toolbar-buttons .btn:hover {
+			background-color: #49D97E;
+		}
+		.toolbar-buttons .btn:active {
+			background-color: #41BE6F;
+		}
+	.toolbar-actions {
+		float: right;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+		.toolbar-actions .item {
+			display: block;
+			float: left;
+			padding: 0 10px;
+			height: 50px;
+			line-height: 50px;
+			color: #fff;
+			cursor: pointer;
+		}
+		.toolbar-actions .item:hover {
+			background-color: rgba( 255, 255, 255, .3 );
+		}
+		.toolbar-actions.disable .item {
+			color: rgba( 255, 255, 255, .3 );
+			cursor: default;
+		}
+		.toolbar-actions.disable .item:hover {
+			background-color: transparent;
+		}
 
 .images-container {
 	height: 100%;
@@ -98,33 +132,29 @@ html, body {
 	padding: 0;
 	overflow: scroll;
 }
-
-.images-container ul {
-	overflow: hidden;
-	margin: 60px 10px 10px 10px;
-	padding: 0;
-	list-style: none;
-}
-
-.images-container li {
-	position: relative;
-	float: left;
-	margin: 10px;
-	width: 200px;
-	height: 200px;
-	background-color: #000;
-}
-
-.images-container li.selected {
-	box-shadow: 0px 0px 0px 10px red;
-}
-
-.images-container canvas {
-	display: block;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate( -50%, -50% );
-	max-width: 200px;
-	max-height: 200px;
-}
+	.images-container ul {
+		overflow: hidden;
+		margin: 60px 10px 10px 10px;
+		padding: 0;
+		list-style: none;
+	}
+		.images-container li.selected {
+			box-shadow: 0px 0px 0px 10px red;
+		}
+		.images-container li {
+			position: relative;
+			float: left;
+			margin: 10px;
+			width: 200px;
+			height: 200px;
+			background-color: #000;
+		}
+			.images-container li canvas {
+				display: block;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate( -50%, -50% );
+				max-width: 200px;
+				max-height: 200px;
+			}

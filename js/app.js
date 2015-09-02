@@ -1,9 +1,9 @@
 (function ( w, d ) {
-	//todo отладить загрузку на сервер
-	//todo сделать кнопки для загрузки файлов
 	//todo обновлять метаинформацию о файле
+	//todo отправлять форму
+	//todo для картинок показывать синхронизацию
+	//todo выводить алерт с сообщениями от сервера
 	//fixme сортировка не таскает картинки
-	//
 	var _files = {},
 		dropzone = d.querySelector( '.dropzone'),
 		imagesContainer = d.querySelector( '.images-container .sortable'),
@@ -34,7 +34,7 @@
 		onHover = function ( hover ) {
 			dropzone.classList[ hover ? 'add' : 'remove' ]( 'show' );
 		},
-		onFile = function ( files ) {
+		onFiles = function ( files ) {
 			FileAPI.each( files, function ( file ) {
 				FileAPI.Image( file ).get( function (err/**String*/, img/**HTMLElement*/) {
 					var guid = getGUID(), li;
@@ -107,6 +107,9 @@
 					}
 				}
 			} );
+		},
+		fileInfoUpload = function ( guid ) {
+			//todo send meta to server
 		};
 
 	new Sortable( d.querySelector( '.sortable' ), {
@@ -118,7 +121,18 @@
 
 	setToolBarInfo();
 
-	FileAPI.event.dnd( d, onHover, onFile );
+	if ( FileAPI.support.dnd ) {
+		d.querySelector( '#dnd-enable' ).classList.remove( 'hide' );
+		FileAPI.event.dnd( d, onHover, onFiles );
+	}
+
+	Array.prototype.forEach.call( d.querySelectorAll( '.toolbar-buttons input' ), function ( input ) {
+		FileAPI.event.on( input, 'change', function ( e ) {
+			var files = FileAPI.getFiles( e );
+			onFiles(files);
+			FileAPI.reset( e.target );
+		} );
+	} );
 
 	d.querySelector( '#actionMain' ).addEventListener( 'click', onMain );
 	d.querySelector( '#actionPublish' ).addEventListener( 'click', onPublish );
